@@ -1,13 +1,15 @@
+import {hostname} from './ServiceConfig';
+
 class LessonService {
   constructor() {
-    this._baseUrl = "/api/lesson";
+    this._baseUrl = hostname + '/api/lesson';
   }
 
   create(moduleId, lesson) {
     const options = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(lesson)
     };
@@ -20,29 +22,29 @@ class LessonService {
   }
 
   findById(id) {
-    return fetch(this._baseUrl + "/" + id).then(response => response.json());
+    return fetch(this._baseUrl + '/' + id).then(response => response.json());
   }
 
   findAllByModuleId(id) {
-    return fetch("/api/module/" + id + "/lessons").then(response => response.json());
+    return fetch('/api/module/' + id + '/lessons').then(response => response.json());
   }
 
   update(id, lesson) {
     const options = {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(lesson)
     };
-    return fetch(this._baseUrl + "/" + id, options).then(response => response.json());
+    return fetch(this._baseUrl + '/' + id, options).then(response => response.json());
   }
 
   remove(id) {
     const options = {
-      method: "DELETE"
+      method: 'DELETE'
     };
-    return fetch(this._baseUrl + "/" + id, options);
+    return fetch(this._baseUrl + '/' + id, options);
   }
 }
 

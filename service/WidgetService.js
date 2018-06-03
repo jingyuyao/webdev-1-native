@@ -1,13 +1,15 @@
+import {hostname} from './ServiceConfig';
+
 class WidgetService {
   constructor() {
-    this._baseUrl = "/api/widget";
+    this._baseUrl = hostname + '/api/widget';
   }
 
   create(lessonId, widget) {
     const options = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(widget)
     };
@@ -20,29 +22,29 @@ class WidgetService {
   }
 
   findById(id) {
-    return fetch(this._baseUrl + "/" + id).then(response => response.json());
+    return fetch(this._baseUrl + '/' + id).then(response => response.json());
   }
 
   findAllByLessonId(id) {
-    return fetch("/api/lesson/" + id + "/widgets").then(response => response.json());
+    return fetch('/api/lesson/' + id + '/widgets').then(response => response.json());
   }
 
   update(id, widget) {
     const options = {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(widget)
     };
-    return fetch(this._baseUrl + "/" + id, options).then(response => response.json());
+    return fetch(this._baseUrl + '/' + id, options).then(response => response.json());
   }
 
   remove(id) {
     const options = {
-      method: "DELETE"
+      method: 'DELETE'
     };
-    return fetch(this._baseUrl + "/" + id, options);
+    return fetch(this._baseUrl + '/' + id, options);
   }
 }
 
