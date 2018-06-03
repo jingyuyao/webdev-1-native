@@ -1,10 +1,6 @@
-import {hostname} from './ServiceConfig';
+import {courseUrl} from './ServiceConfig';
 
 class CourseService {
-  constructor() {
-    this._baseUrl = hostname + '/api/course';
-  }
-
   create(course) {
     const options = {
       method: 'POST',
@@ -13,15 +9,15 @@ class CourseService {
       },
       body: JSON.stringify(course)
     };
-    return fetch(this._baseUrl, options).then(response => response.json());
+    return fetch(courseUrl, options).then(response => response.json());
   }
 
   findAll() {
-    return fetch(this._baseUrl).then(response => response.json());
+    return fetch(courseUrl).then(response => response.json());
   }
 
   findById(id) {
-    return fetch(this._baseUrl + '/' + id).then(response => response.json());
+    return fetch(`${courseUrl}/${id}`).then(response => response.json());
   }
 
   update(id, course) {
@@ -32,14 +28,14 @@ class CourseService {
       },
       body: JSON.stringify(course)
     };
-    return fetch(this._baseUrl + '/' + id, options).then(response => response.json());
+    return fetch(`${courseUrl}/${id}`, options).then(response => response.json());
   }
 
   remove(id) {
     const options = {
       method: 'DELETE'
     };
-    return fetch(this._baseUrl + '/' + id, options);
+    return fetch(`${courseUrl}/${id}`, options);
   }
 }
 

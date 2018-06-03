@@ -1,10 +1,6 @@
-import {hostname} from './ServiceConfig';
+import {moduleUrl, courseUrl} from './ServiceConfig';
 
 class ModuleService {
-  constructor() {
-    this._baseUrl = hostname + '/api/module';
-  }
-
   create(courseId, module) {
     const options = {
       method: 'POST',
@@ -13,20 +9,20 @@ class ModuleService {
       },
       body: JSON.stringify(module)
     };
-    return fetch(`/api/course/${courseId}/module`, options)
+    return fetch(`${courseUrl}/${courseId}/module`, options)
       .then(response => response.json());
   }
 
   findAll() {
-    return fetch(this._baseUrl).then(response => response.json());
+    return fetch(moduleUrl).then(response => response.json());
   }
 
   findById(id) {
-    return fetch(this._baseUrl + '/' + id).then(response => response.json());
+    return fetch(`${moduleUrl}/${id}`).then(response => response.json());
   }
 
   findAllByCourseId(id) {
-    return fetch('/api/course/' + id + '/modules').then(response => response.json());
+    return fetch(`${courseUrl}/${id}/modules`).then(response => response.json());
   }
 
   update(id, module) {
@@ -37,14 +33,14 @@ class ModuleService {
       },
       body: JSON.stringify(module)
     };
-    return fetch(this._baseUrl + '/' + id, options).then(response => response.json());
+    return fetch(`${moduleUrl}/${id}`, options).then(response => response.json());
   }
 
   remove(id) {
     const options = {
       method: 'DELETE'
     };
-    return fetch(this._baseUrl + '/' + id, options);
+    return fetch(`${moduleUrl}/${id}`, options);
   }
 }
 

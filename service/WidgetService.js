@@ -1,10 +1,6 @@
-import {hostname} from './ServiceConfig';
+import {widgetUrl, lessonUrl} from './ServiceConfig';
 
 class WidgetService {
-  constructor() {
-    this._baseUrl = hostname + '/api/widget';
-  }
-
   create(lessonId, widget) {
     const options = {
       method: 'POST',
@@ -13,20 +9,20 @@ class WidgetService {
       },
       body: JSON.stringify(widget)
     };
-    return fetch(`/api/lesson/${lessonId}/widget`, options)
+    return fetch(`${lessonUrl}/${lessonId}/widget`, options)
       .then(response => response.json());
   }
 
   findAll() {
-    return fetch(this._baseUrl).then(response => response.json());
+    return fetch(widgetUrl).then(response => response.json());
   }
 
   findById(id) {
-    return fetch(this._baseUrl + '/' + id).then(response => response.json());
+    return fetch(`${widgetUrl}/${id}`).then(response => response.json());
   }
 
   findAllByLessonId(id) {
-    return fetch('/api/lesson/' + id + '/widgets').then(response => response.json());
+    return fetch(`${lessonUrl}/${id}/widgets`).then(response => response.json());
   }
 
   update(id, widget) {
@@ -37,14 +33,14 @@ class WidgetService {
       },
       body: JSON.stringify(widget)
     };
-    return fetch(this._baseUrl + '/' + id, options).then(response => response.json());
+    return fetch(`${widgetUrl}/${id}`, options).then(response => response.json());
   }
 
   remove(id) {
     const options = {
       method: 'DELETE'
     };
-    return fetch(this._baseUrl + '/' + id, options);
+    return fetch(`${widgetUrl}/${id}`, options);
   }
 }
 
