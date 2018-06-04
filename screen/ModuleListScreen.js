@@ -1,8 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, View, FlatList, Button} from 'react-native';
+import {StyleSheet, View, FlatList, Button} from 'react-native';
 import lessonService from '../service/LessonService';
 
 export default class ModuleListScreen extends React.PureComponent {
+  static navigationOptions = ({navigation}) => {
+    return {
+      title: navigation.getParam('courseTitle', ''),
+    };
+  };
+
   _moduleKeyExtractor = (item, index) => item.id.toString();
 
   _renderModule = ({item}) => (
@@ -25,11 +31,9 @@ export default class ModuleListScreen extends React.PureComponent {
 
   render() {
     const {navigation} = this.props;
-    const courseTitle = navigation.getParam('courseTitle', '');
     const modules = navigation.getParam('modules', []);
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{courseTitle}</Text>
         <FlatList
           data={modules}
           keyExtractor={this._moduleKeyExtractor}
@@ -45,10 +49,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flex: 1,
     padding: 10,
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
   },
   button: {
     marginBottom: 5,

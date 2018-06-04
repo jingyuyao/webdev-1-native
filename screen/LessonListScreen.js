@@ -1,7 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, FlatList, Button} from 'react-native';
+import {StyleSheet, View, FlatList, Button} from 'react-native';
 
 export default class LessonListScreen extends React.PureComponent {
+  static navigationOptions = ({navigation}) => {
+    return {
+      title: navigation.getParam('moduleTitle', ''),
+    };
+  };
+
   _lessonKeyExtractor = (item, index) => item.id.toString();
 
   _renderLesson = ({item}) => (
@@ -17,11 +23,9 @@ export default class LessonListScreen extends React.PureComponent {
 
   render() {
     const {navigation} = this.props;
-    const moduleTitle = navigation.getParam('moduleTitle', '');
     const lessons = navigation.getParam('lessons', []);
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{moduleTitle}</Text>
         <FlatList
           data={lessons}
           keyExtractor={this._lessonKeyExtractor}
@@ -37,10 +41,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flex: 1,
     padding: 10,
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
   },
   button: {
     marginBottom: 5,
