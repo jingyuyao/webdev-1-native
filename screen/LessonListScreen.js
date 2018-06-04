@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, FlatList, Button} from 'react-native';
+import widgetService from '../service/WidgetService';
 
 export default class LessonListScreen extends React.PureComponent {
   static navigationOptions = ({navigation}) => {
@@ -19,7 +20,14 @@ export default class LessonListScreen extends React.PureComponent {
     </View>
   );
 
-  _onLessonPress = lesson => console.log(lesson);
+  _onLessonPress = lesson => {
+    widgetService
+      .findAllByLessonId(lesson.id)
+      .then(response => this.props.navigation.push('WidgetList', {
+        lessonTitle: lesson.title,
+        widgets: response.widgets,
+      }));
+  };
 
   render() {
     const {navigation} = this.props;
