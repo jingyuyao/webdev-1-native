@@ -82,7 +82,7 @@ export default class QuestionForm extends React.PureComponent {
           </React.Fragment>
         );
       case 'FillInQuestion':
-        return <Text>Not implemented</Text>;
+        return <Text>FillInQuestion specific form is not implemented</Text>;
       case 'EssayQuestion':
         return null;
     }
