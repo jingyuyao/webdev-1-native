@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, Text, TextInput, Picker, FlatList, Button} from 'react-native';
-import questionService from '../service/QuestionService';
 
 export default class QuestionForm extends React.PureComponent {
   constructor(props) {
@@ -14,7 +13,7 @@ export default class QuestionForm extends React.PureComponent {
   };
 
   _updateQuestion = () => {
-    questionService.update(this.state.id, this.state);
+    this.props.updateQuestion(this.state);
   };
 
   _removeChoice = choice => {

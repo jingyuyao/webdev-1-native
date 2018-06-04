@@ -5,18 +5,7 @@ import QuestionForm from './QuestionForm';
 
 export default class QuestionFormList extends React.PureComponent {
   state = {
-    questions: [],
     newQuestionType: 'BooleanQuestion',
-  };
-
-  componentDidMount() {
-    this._refreshQuestions();
-  }
-
-  _refreshQuestions = () => {
-    questionService
-      .findAllByExamId(this.props.examId)
-      .then(response => this.setState({questions: response.questions}));
   };
 
   _onNewQuestionTypeChange = (itemValue, itemIndex) => {
@@ -26,24 +15,32 @@ export default class QuestionFormList extends React.PureComponent {
   _addQuestion = () => {
     questionService
       .create(this.props.examId, {type: this.state.newQuestionType})
-      .then(this._refreshQuestions);
+      .then(this.props.refreshQuestions);
   };
 
   _deleteQuestion = question => {
     questionService
       .remove(question.id)
-      .then(this._refreshQuestions);
+      .then(this.props.refreshQuestions);
+  };
+
+  _updateQuestion = question => {
+    questionService
+      .update(question.id, question)
+      .then(this.props.refreshQuestions);
   };
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Questions</Text>
-        {this.state.questions.map(question =>
+        {this.props.questions.map(question =>
           <QuestionForm
             key={question.id}
             question={question}
-            deleteQuestion={() => this._deleteQuestion(question)}/>)}
+            deleteQuestion={() => this._deleteQuestion(question)}
+            updateQuestion={this._updateQuestion}
+          />)}
         <View style={styles.addQuestionContainer}>
           <Picker
             style={styles.addQuestionTypePicker}

@@ -1,14 +1,28 @@
 import React from 'react';
 import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
 import widgetService from '../service/WidgetService';
+import questionService from '../service/QuestionService';
 import QuestionFormList from '../component/QuestionFormList';
+import QuestionPreview from '../component/QuestionPreview';
 
 export default class Widget extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign({}, props.widget);
+    this.state = Object.assign({questions: []}, props.widget);
   }
+
+  componentDidMount() {
+    if (this.state.type === 'Exam') {
+      this._refreshQuestions();
+    }
+  }
+
+  _refreshQuestions = () => {
+    questionService
+      .findAllByExamId(this.state.id)
+      .then(response => this.setState({questions: response.questions}));
+  };
 
   _updateWidget = () => {
     widgetService.update(this.state.id, this.state);
@@ -65,7 +79,10 @@ export default class Widget extends React.PureComponent {
                 onPress={this._updateWidget}
               />
             </View>
-            <QuestionFormList examId={this.state.id}/>
+            <QuestionFormList
+              examId={this.state.id}
+              questions={this.state.questions}
+              refreshQuestions={this._refreshQuestions}/>
           </React.Fragment>
         );
     }
@@ -93,6 +110,12 @@ export default class Widget extends React.PureComponent {
       case 'Exam':
         return (
           <React.Fragment>
+            <Text style={styles.header}>
+              Exam Points: {this.state.points}
+            </Text>
+            <Text>{this.state.text}</Text>
+            {this.state.questions.map(question =>
+              <QuestionPreview key={question.id} question={question}/>)}
           </React.Fragment>
         );
     }
