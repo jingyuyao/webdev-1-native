@@ -1,17 +1,21 @@
 import React from 'react';
-import {StyleSheet, View, Text, TextInput, Picker, Button} from 'react-native';
+import {StyleSheet, View, Text, TextInput, Picker, FlatList, Button} from 'react-native';
 import questionService from '../service/QuestionService';
 
 export default class QuestionForm extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign({}, props.question);
+    this.state = Object.assign({newChoice: ''}, props.question);
   }
 
   _deleteQuestion = () => {};
 
   _updateQuestion = () => {};
+
+  _removeChoice = choice => {};
+
+  _addChoice = () => {};
 
   _renderTypeSpecificForm = () => {
     switch(this.state.type) {
@@ -28,7 +32,43 @@ export default class QuestionForm extends React.PureComponent {
           </React.Fragment>
         );
       case 'ChoiceQuestion':
-        return null;
+        return (
+          <React.Fragment>
+            <Text>Choices:</Text>
+            <FlatList
+              data={this.state.choices}
+              keyExtractor={(item, index) => item}
+              renderItem={({item, index}) =>
+                  <View style={styles.choice}>
+                    <Text>{index}. {item}</Text>
+                    <Button
+                      title='Delete'
+                      color='red'
+                      onPress={() => this._removeChoice(item)}
+                    />
+                  </View>
+              }
+            />
+            <View style={styles.newChoiceContainer}>
+              <TextInput
+                style={styles.newChoiceInput}
+                value={this.state.newChoice}
+                onChangeText={text => this.setState({newChoice: text})}
+              />
+              <Button
+                title='Add choice'
+                onPress={this._addChoice}
+              />
+            </View>
+            <Text>Answer:</Text>
+            <Picker
+              selectedValue={this.state.answer}
+              onValueChange={(value, index) => this.setState({answer: value})}>
+              {this.state.choices.map((choice, index) =>
+                <Picker.Item label={index.toString()} value={index}/>)}
+            </Picker>
+          </React.Fragment>
+        );
       case 'FillInQuestion':
         return null;
       case 'EssayQuestion':
@@ -85,5 +125,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  choice: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  newChoiceContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  newChoiceInput: {
+    flexGrow: 1,
+    marginRight: 5,
   },
 });
