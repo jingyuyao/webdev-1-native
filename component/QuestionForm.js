@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
+import {StyleSheet, View, Text, TextInput, Picker, Button} from 'react-native';
 import questionService from '../service/QuestionService';
 
 export default class QuestionForm extends React.PureComponent {
@@ -12,6 +12,29 @@ export default class QuestionForm extends React.PureComponent {
   _deleteQuestion = () => {};
 
   _updateQuestion = () => {};
+
+  _renderTypeSpecificForm = () => {
+    switch(this.state.type) {
+      case 'BooleanQuestion':
+        return (
+          <React.Fragment>
+            <Text>Answer:</Text>
+            <Picker
+              selectedValue={this.state.answer}
+              onValueChange={(value, index) => this.setState({answer: value})}>
+              <Picker.Item label='True' value={true}/>
+              <Picker.Item label='False' value={false}/>
+            </Picker>
+          </React.Fragment>
+        );
+      case 'ChoiceQuestion':
+        return null;
+      case 'FillInQuestion':
+        return null;
+      case 'EssayQuestion':
+        return null;
+    }
+  };
 
   render() {
     return (
@@ -34,6 +57,7 @@ export default class QuestionForm extends React.PureComponent {
           onChangeText={
             text => this.setState({points: text ? parseInt(text) : 0})}
         />
+        {this._renderTypeSpecificForm()}
         <View style={styles.actionsContainer}>
           <Button
             title='Delete question'

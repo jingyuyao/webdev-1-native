@@ -36,6 +36,12 @@ export default class Widget extends React.PureComponent {
               onChangeText={
                 text => this.setState({points: text ? parseInt(text) : 0})}
             />
+            <View style={styles.updateButtonContainer}>
+              <Button
+                title='Update widget'
+                onPress={this._updateWidget}
+              />
+            </View>
           </React.Fragment>
         );
       case 'Exam':
@@ -53,6 +59,12 @@ export default class Widget extends React.PureComponent {
               onChangeText={
                 text => this.setState({points: text ? parseInt(text) : 0})}
             />
+            <View style={styles.updateButtonContainer}>
+              <Button
+                title='Update widget'
+                onPress={this._updateWidget}
+              />
+            </View>
             <QuestionFormList examId={this.state.id}/>
           </React.Fragment>
         );
@@ -98,12 +110,6 @@ export default class Widget extends React.PureComponent {
           onChangeText={text => this.setState({name: text})}
         />
         {this._renderTypeSpecificForm()}
-        <View style={styles.updateButtonContainer}>
-          <Button
-            title='Update widget'
-            onPress={this._updateWidget}
-          />
-        </View>
         <Text style={styles.preview}>Preview:</Text>
         {this._renderTypeSpecificPreview()}
       </View>
