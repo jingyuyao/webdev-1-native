@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
 import widgetService from '../service/WidgetService';
+import QuestionFormList from '../component/QuestionFormList';
 
 export default class Widget extends React.PureComponent {
   constructor(props) {
@@ -52,6 +53,7 @@ export default class Widget extends React.PureComponent {
               onChangeText={
                 text => this.setState({points: text ? parseInt(text) : 0})}
             />
+            <QuestionFormList examId={this.state.id}/>
           </React.Fragment>
         );
     }
