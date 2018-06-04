@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, ScrollView, Button} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, Button} from 'react-native';
 import widgetService from '../service/WidgetService';
 import Widget from '../component/Widget';
 
@@ -52,6 +52,10 @@ export default class WidgetListScreen extends React.PureComponent {
 
     return (
       <ScrollView style={styles.container}>
+        <Text>
+          Widgets can only be deleted and re-ordered in the web interface.
+          Only Assignment and Exam widgets are shown.
+        </Text>
         {assignmentsAndExams.map(
           widget => <Widget key={widget.id} widget={widget}/>)}
         <View style={styles.addButtonContainer}>
