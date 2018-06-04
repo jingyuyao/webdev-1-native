@@ -1,18 +1,39 @@
 import React from 'react';
-import {StyleSheet, View, Text, TextInput, Picker, FlatList, Button} from 'react-native';
+import {StyleSheet, View, Text, TextInput, Picker} from 'react-native';
 
 export default class QuestionPreview extends React.PureComponent {
   _renderTypeSpecificPreview = () => {
     const question = this.props.question;
     switch(question.type) {
       case 'BooleanQuestion':
-        return null;
+        return (
+          <React.Fragment>
+            <Text>Answer:</Text>
+            <Picker>
+              <Picker.Item label='True'/>
+              <Picker.Item label='False'/>
+            </Picker>
+          </React.Fragment>
+        );
       case 'ChoiceQuestion':
-        return null;
+        return (
+          <React.Fragment>
+            <Text>Answer:</Text>
+            <Picker>
+              {question.choices.map(choice =>
+                <Picker.Item key={choice} label={choice}/>)}
+            </Picker>
+          </React.Fragment>
+        );
       case 'FillInQuestion':
-        return null;
+        return <Text>FillInQuestion preview is not implemented.</Text>;
       case 'EssayQuestion':
-        return null;
+        return (
+          <React.Fragment>
+            <Text>Answer:</Text>
+            <TextInput multiline={true} numberOfLines={3}/>
+          </React.Fragment>
+        );
     }
   }
 
