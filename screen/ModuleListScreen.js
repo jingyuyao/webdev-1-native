@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, FlatList, Button} from 'react-native';
+import lessonService from '../service/LessonService';
 
 export default class ModuleListScreen extends React.PureComponent {
   _moduleKeyExtractor = (item, index) => item.id.toString();
@@ -13,7 +14,14 @@ export default class ModuleListScreen extends React.PureComponent {
     </View>
   );
 
-  _onModulePress = module => console.log(module);
+  _onModulePress = module => {
+    lessonService
+      .findAllByModuleId(module.id)
+      .then(lessons => this.props.navigation.push('LessonList', {
+        moduleTitle: module.title,
+        lessons: lessons,
+      }));
+  };
 
   render() {
     const {navigation} = this.props;
