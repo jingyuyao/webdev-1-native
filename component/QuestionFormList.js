@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 import questionService from '../service/QuestionService';
+import QuestionForm from './QuestionForm';
 
 export default class QuestionFormList extends React.PureComponent {
   state = {questions: []};
@@ -12,11 +13,18 @@ export default class QuestionFormList extends React.PureComponent {
   }
 
   render() {
-    console.log(this.state.questions);
     return (
-      <View>
+      <View styles={styles.container}>
         <Text>Questions</Text>
+        {this.state.questions.map(question =>
+          <QuestionForm key={question.id} question={question}/>)}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 5,
+  },
+});
