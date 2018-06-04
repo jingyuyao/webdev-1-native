@@ -62,6 +62,16 @@ export default class Widget extends React.PureComponent {
       case 'Assignment':
         return (
           <React.Fragment>
+            <Text style={styles.header}>
+              {this.state.title} Points: {this.state.points}
+            </Text>
+            <Text>{this.state.text}</Text>
+            <Text>Essay Answer</Text>
+            <TextInput multiline={true} numberOfLines={3}/>
+            <Text>Upload file</Text>
+            <Button title='Choose file' onPress={() => {}}/>
+            <Text>Submit a link</Text>
+            <TextInput/>
           </React.Fragment>
         );
       case 'Exam':
