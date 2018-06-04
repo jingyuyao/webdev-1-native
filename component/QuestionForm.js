@@ -11,8 +11,8 @@ export default class QuestionForm extends React.PureComponent {
 
   render() {
     return (
-      <View styles={styles.container}>
-        <Text>{this.state.text}</Text>
+      <View style={styles.container}>
+        <Text>{this.state.type}</Text>
       </View>
     );
   }

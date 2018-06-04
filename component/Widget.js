@@ -71,7 +71,9 @@ export default class Widget extends React.PureComponent {
             <Text>Essay Answer</Text>
             <TextInput multiline={true} numberOfLines={3}/>
             <Text>Upload file</Text>
-            <Button title='Choose file' onPress={() => {}}/>
+            <View style={styles.chooseFileButtonContainer}>
+              <Button title='Choose file' onPress={() => {}}/>
+            </View>
             <Text>Submit a link</Text>
             <TextInput/>
           </React.Fragment>
@@ -96,10 +98,12 @@ export default class Widget extends React.PureComponent {
           onChangeText={text => this.setState({name: text})}
         />
         {this._renderTypeSpecificForm()}
-        <Button
-          title='Update'
-          onPress={this._updateWidget}
-        />
+        <View style={styles.updateButtonContainer}>
+          <Button
+            title='Update widget'
+            onPress={this._updateWidget}
+          />
+        </View>
         <Text style={styles.preview}>Preview:</Text>
         {this._renderTypeSpecificPreview()}
       </View>
@@ -117,6 +121,15 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: 'bold',
+  },
+  updateButtonContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  chooseFileButtonContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   preview: {
     marginTop: 5,

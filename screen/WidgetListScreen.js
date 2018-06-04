@@ -54,13 +54,11 @@ export default class WidgetListScreen extends React.PureComponent {
       <ScrollView style={styles.container}>
         {assignmentsAndExams.map(
           widget => <Widget key={widget.id} widget={widget}/>)}
-        <View style={styles.addButton}>
+        <View style={styles.addButtonContainer}>
           <Button
             title='Add assignment'
             onPress={this._addAssignment}
           />
-        </View>
-        <View style={styles.addButton}>
           <Button
             title='Add exam'
             onPress={this._addExam}
@@ -77,7 +75,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-  addButton: {
+  addButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 10,
   },
 });
