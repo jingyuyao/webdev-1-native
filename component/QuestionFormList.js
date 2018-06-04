@@ -32,7 +32,7 @@ export default class QuestionFormList extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Questions</Text>
+        <Text style={styles.header}>Questions</Text>
         {this.state.questions.map(question =>
           <QuestionForm key={question.id} question={question}/>)}
         <View style={styles.addQuestionContainer}>
@@ -58,6 +58,9 @@ export default class QuestionFormList extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 5,
+  },
+  header: {
+    fontWeight: 'bold',
   },
   addQuestionContainer: {
     alignItems: 'center',
