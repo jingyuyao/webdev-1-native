@@ -29,21 +29,30 @@ export default class QuestionFormList extends React.PureComponent {
       .then(this._refreshQuestions);
   };
 
+  _deleteQuestion = question => {
+    questionService
+      .remove(question.id)
+      .then(this._refreshQuestions);
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Questions</Text>
         {this.state.questions.map(question =>
-          <QuestionForm key={question.id} question={question}/>)}
+          <QuestionForm
+            key={question.id}
+            question={question}
+            deleteQuestion={() => this._deleteQuestion(question)}/>)}
         <View style={styles.addQuestionContainer}>
           <Picker
             style={styles.addQuestionTypePicker}
             selectedValue={this.state.newQuestionType}
             onValueChange={this._onNewQuestionTypeChange}>
-            <Picker.Item label="BooleanQuestion" value="BooleanQuestion"/>
-            <Picker.Item label="ChoiceQuestion" value="ChoiceQuestion"/>
-            <Picker.Item label="FillInQuestion" value="FillInQuestion"/>
-            <Picker.Item label="EssayQuestion" value="EssayQuestion"/>
+            <Picker.Item label='BooleanQuestion' value='BooleanQuestion'/>
+            <Picker.Item label='ChoiceQuestion' value='ChoiceQuestion'/>
+            <Picker.Item label='FillInQuestion' value='FillInQuestion'/>
+            <Picker.Item label='EssayQuestion' value='EssayQuestion'/>
           </Picker>
           <Button
             title='Add question'

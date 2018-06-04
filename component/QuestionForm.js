@@ -9,13 +9,25 @@ export default class QuestionForm extends React.PureComponent {
     this.state = Object.assign({newChoice: ''}, props.question);
   }
 
-  _deleteQuestion = () => {};
+  _deleteQuestion = () => {
+    this.props.deleteQuestion();
+  };
 
-  _updateQuestion = () => {};
+  _updateQuestion = () => {
+    questionService.update(this.state.id, this.state);
+  };
 
-  _removeChoice = choice => {};
+  _removeChoice = choice => {
+    const newChoices = this.state.choices.filter(c => c !== choice);
+    this.setState({choices: newChoices});
+  };
 
-  _addChoice = () => {};
+  _addChoice = () => {
+    this.setState({
+      choices: [...this.state.choices, this.state.newChoice],
+      newChoice: '',
+    });
+  };
 
   _renderTypeSpecificForm = () => {
     switch(this.state.type) {
@@ -65,12 +77,12 @@ export default class QuestionForm extends React.PureComponent {
               selectedValue={this.state.answer}
               onValueChange={(value, index) => this.setState({answer: value})}>
               {this.state.choices.map((choice, index) =>
-                <Picker.Item label={index.toString()} value={index}/>)}
+                <Picker.Item key={choice} label={index.toString()} value={index}/>)}
             </Picker>
           </React.Fragment>
         );
       case 'FillInQuestion':
-        return null;
+        return <Text>Not implemented</Text>;
       case 'EssayQuestion':
         return null;
     }
