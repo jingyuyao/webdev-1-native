@@ -57,6 +57,21 @@ export default class Widget extends React.PureComponent {
     }
   };
 
+  _renderTypeSpecificPreview = () => {
+    switch (this.state.type) {
+      case 'Assignment':
+        return (
+          <React.Fragment>
+          </React.Fragment>
+        );
+      case 'Exam':
+        return (
+          <React.Fragment>
+          </React.Fragment>
+        );
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -73,6 +88,8 @@ export default class Widget extends React.PureComponent {
           title='Update'
           onPress={this._updateWidget}
         />
+        <Text style={styles.preview}>Preview:</Text>
+        {this._renderTypeSpecificPreview()}
       </View>
     );
   }
@@ -89,5 +106,9 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: 'bold',
+  },
+  preview: {
+    marginTop: 5,
+    marginBottom: 5,
   },
 });
