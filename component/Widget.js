@@ -1,17 +1,68 @@
 import React from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
 import widgetService from '../service/WidgetService';
 
 export default class Widget extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = Object.assign({}, props.widget);
+  }
+
+  _renderTypeSpecificForm = () => {
+    switch (this.state.type) {
+      case 'Assignment':
+        return (
+          <React.Fragment>
+            <Text>Title:</Text>
+            <TextInput
+              value={this.state.title}
+              onChangeText={text => this.setState({title: text})}
+            />
+            <Text>Description:</Text>
+            <TextInput
+              value={this.state.text}
+              onChangeText={text => this.setState({text: text})}
+            />
+            <Text>Points:</Text>
+            <TextInput
+              keyboardType='numeric'
+              value={this.state.points.toString()}
+              onChangeText={text => this.setState({points: parseInt(text)})}
+            />
+          </React.Fragment>
+        );
+      case 'Exam':
+        return (
+          <React.Fragment>
+            <Text>Title:</Text>
+            <TextInput
+              value={this.state.text}
+              onChangeText={text => this.setState({text: text})}
+            />
+            <Text>Points:</Text>
+            <TextInput
+              keyboardType='numeric'
+              value={this.state.points.toString()}
+              onChangeText={text => this.setState({points: parseInt(text)})}
+            />
+          </React.Fragment>
+        );
+    }
+  };
+
   render() {
-    const widget = this.props.widget;
     return (
       <View style={styles.container}>
-        <Text>Preview:</Text>
         <Text style={styles.header}>
-          {widget.title ? widget.title : 'Exam'} Points: {widget.points}
+          {this.state.type} widget
         </Text>
-        <Text>{widget.text}</Text>
+        <Text>Widget name:</Text>
+        <TextInput
+          value={this.state.name}
+          onChangeText={text => this.setState({name: text})}
+        />
+        {this._renderTypeSpecificForm()}
       </View>
     );
   }
@@ -19,8 +70,12 @@ export default class Widget extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'black',
     flexDirection: 'column',
-    margin: 10,
+    margin: 5,
+    padding: 10,
   },
   header: {
     fontWeight: 'bold',

@@ -28,7 +28,6 @@ export default class WidgetListScreen extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'flex-start',
     backgroundColor: '#fff',
     flex: 1,
     padding: 10,
