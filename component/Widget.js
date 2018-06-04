@@ -9,6 +9,10 @@ export default class Widget extends React.PureComponent {
     this.state = Object.assign({}, props.widget);
   }
 
+  _updateWidget = () => {
+    widgetService.update(this.state.id, this.state);
+  };
+
   _renderTypeSpecificForm = () => {
     switch (this.state.type) {
       case 'Assignment':
@@ -28,7 +32,8 @@ export default class Widget extends React.PureComponent {
             <TextInput
               keyboardType='numeric'
               value={this.state.points.toString()}
-              onChangeText={text => this.setState({points: parseInt(text)})}
+              onChangeText={
+                text => this.setState({points: text ? parseInt(text) : 0})}
             />
           </React.Fragment>
         );
@@ -44,7 +49,8 @@ export default class Widget extends React.PureComponent {
             <TextInput
               keyboardType='numeric'
               value={this.state.points.toString()}
-              onChangeText={text => this.setState({points: parseInt(text)})}
+              onChangeText={
+                text => this.setState({points: text ? parseInt(text) : 0})}
             />
           </React.Fragment>
         );
@@ -63,6 +69,10 @@ export default class Widget extends React.PureComponent {
           onChangeText={text => this.setState({name: text})}
         />
         {this._renderTypeSpecificForm()}
+        <Button
+          title='Update'
+          onPress={this._updateWidget}
+        />
       </View>
     );
   }
