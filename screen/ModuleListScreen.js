@@ -5,7 +5,7 @@ import lessonService from '../service/LessonService';
 export default class ModuleListScreen extends React.PureComponent {
   static navigationOptions = ({navigation}) => {
     return {
-      title: navigation.getParam('courseTitle', ''),
+      title: 'Course: ' + navigation.getParam('courseTitle', ''),
     };
   };
 

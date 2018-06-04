@@ -6,7 +6,7 @@ import Widget from '../component/Widget';
 export default class WidgetListScreen extends React.PureComponent {
   static navigationOptions = ({navigation}) => {
     return {
-      title: navigation.getParam('lessonTitle', ''),
+      title: 'Lesson: ' + navigation.getParam('lessonTitle', ''),
     };
   };
 

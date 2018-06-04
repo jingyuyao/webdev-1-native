@@ -4,7 +4,7 @@ import {StyleSheet, View, FlatList, Button} from 'react-native';
 export default class LessonListScreen extends React.PureComponent {
   static navigationOptions = ({navigation}) => {
     return {
-      title: navigation.getParam('moduleTitle', ''),
+      title: 'Module: ' + navigation.getParam('moduleTitle', ''),
     };
   };
 
